@@ -1,0 +1,66 @@
+#calendar {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 20px;
+  width: 900px;
+  background-color: #fff;
+  box-shadow: 0px 0px 6px 2px rgba(207, 207, 207, 0.829);
+}
+
+#calendarPage {
+  margin-top: 38px;
+}
+
+#header {
+  padding: 20px;
+  background-color: #1abc9c;
+  color: white;
+  display: flex;
+}
+
+.month-year {
+  font-size: 36px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.left.button, .right.button {
+  cursor: pointer;
+  font: 20px;
+}
+
+.calendar_icons{
+  display: flex;
+  gap: 30%;
+  width: 100px;
+  align-items: center;
+}
+
+.changeCalendarPeriod{
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead > tr > th {
+  padding: 6px;
+}
+
+td {
+  width: 50px;
+  height: 70px;
+  font-size: 18px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  text-align: right;
+}
+
+#dates {
+  margin: 20px;
+}
