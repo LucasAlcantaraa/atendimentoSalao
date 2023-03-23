@@ -1,7 +1,7 @@
 import './calendar.css'
 import { useState } from 'react'
 // import BotaoAdicionar from '../BotaoAdicionar';
-import ModalAdicionar from '../modais/ModalAdicionar';
+import ModalAgendamento from '../modais/ModalAgendamento';
 
 const today = new Date();
 
@@ -30,6 +30,9 @@ const months = [
 function Calendar() {
     const [month, setMonth] = useState(currentMonth);
     const [year, setYear] = useState(currentYear);
+    const [markedDays, setMarkedDays] = useState([]);
+
+
 
     function previousMonth() {
         setMonth(month - 1)
@@ -51,14 +54,35 @@ function Calendar() {
 
     }
 
+    function addMarkedDay(day) {
+        setMarkedDays([...markedDays, day]);
+        console.log(markedDays)
+    }
+
+    function click(event) {
+        const day = event.target.textContent;
+        const clickedDate = new Date(year, month, day);
+        const dataFormatada = clickedDate.toLocaleDateString('pt-br')
+        console.log(dataFormatada);
+    }
+
+    function calendarMode(event){
+        const calendarMode = event.target.textContent;
+        console.log(calendarMode)
+
+    }
+
+
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfMonth = new Date(year, month, 1).getDay();
+    const daysInPrevMonth = new Date(year, month, 0).getDate();
+    const lastDaysInPrevMonth = daysInPrevMonth - firstDayOfMonth + 1;
+    // console.log(lastDaysInPrevMonth)
+    // console.log(firstDayOfMonth)
     const days = [];
     let prevDays = [];
-    const daysInPrevMonth = new Date(year, month, 0).getDate();
-    const daysToAdd = firstDayOfMonth;
-
-    for (let i = daysInPrevMonth - daysToAdd + 1; i <= daysInPrevMonth; i++) {
+    // console.log(daysInPrevMonth)
+    for (let i = lastDaysInPrevMonth; i <= daysInPrevMonth; i++) {
         prevDays.push(i)
     }
 
@@ -71,11 +95,13 @@ function Calendar() {
     for (let i = 1; i <= daysInMonth; i++) {
         days.push(i);
     }
-
+    let diferenca = days.length - daysInMonth
+    // console.log(days)
+    console.log(diferenca)
 
     return (
         <div id="calendarPage">
-            <ModalAdicionar/>
+            <ModalAgendamento marcador={addMarkedDay} />
 
             <div id="calendar">
                 <div id="header">
@@ -90,9 +116,9 @@ function Calendar() {
                     <span className="month-year" id="label">{months[month] + " " + year}</span>
 
                     <div className='calendar_icons'>
-                        <span>D</span>
-                        <span>M</span>
-                        <span>S</span>
+                        <span onClick={calendarMode}>D</span>
+                        <span onClick={calendarMode}>M</span>
+                        <span onClick={calendarMode}>S</span>
                     </div>
 
                 </div>
@@ -111,10 +137,37 @@ function Calendar() {
                     <tbody>
                         {Array.from({ length: Math.ceil(days.length / 7) }, (_, i) => (
                             <tr key={i}>
-                                {days.slice(i * 7, (i + 1) * 7).map((day, j) => (
-                                    <td key={j}>{day}</td>
-                                ))}
-                            </tr>
+                                {days.slice(i * 7, (i + 1) * 7).map((day, j) => {
+                                    let date;
+
+                                    diferenca > 0 ? date = new Date(year, month - 1, day) : date = new Date(year, month, day)                   
+                                    const dataFormatada = date.toLocaleDateString('pt-br');
+                                    diferenca--
+                                    const isMarked = markedDays.filter(data => {
+                                        return data === dataFormatada
+                                    });
+                                    
+                                    return (
+                                        <td onClick={click} key={j}>
+                                            {day}
+                                            <div className='marksDiv'>
+
+                                                {isMarked.length <= 5 ? (
+
+                                                    isMarked.map((day, index) => (
+                                                        <div key={index}
+                                                            className="marked-day"
+                                                            style={{ top: `${(index + 1) * 0.5}em` }} />
+                                                    ))
+                                                ) : <span className='marcadoresPlus'>+5</span>
+
+                                                }
+
+                                            </div>
+                                        </td>
+                                    )
+                                })}             
+                            </tr>                    
                         ))}
                     </tbody>
                 </table>

@@ -18,6 +18,24 @@
   display: flex;
 }
 
+.marksDiv {
+  display: flex;
+  position: relative;
+  top: 24px;
+}
+.marked-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #1db3e0;
+  transform: translateX(-50%);
+  margin-right: 2px;
+}
+.marcadoresPlus {
+  color: #49b565;
+  font-weight: bold;
+}
+
 .month-year {
   font-size: 36px;
   font-weight: bold;
@@ -35,11 +53,6 @@
   gap: 30%;
   width: 100px;
   align-items: center;
-}
-
-.changeCalendarPeriod{
-  border: 1px solid black;
-  border-radius: 50%;
 }
 
 table {
@@ -60,6 +73,12 @@ td {
   border: 1px solid #ddd;
   text-align: right;
 }
+
+.selected {
+  background-color: #FFA500;
+  border-radius: 50%;
+}
+
 
 #dates {
   margin: 20px;
